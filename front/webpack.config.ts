@@ -1,5 +1,5 @@
 import path from 'path';
-// import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import webpack, { Configuration as WebpackConfiguration } from "webpack";
 import { Configuration as WebpackDevServerConfiguration } from "webpack-dev-server";
 
@@ -7,7 +7,7 @@ interface Configuration extends WebpackConfiguration {
   devServer?: WebpackDevServerConfiguration;
 }
 
-// import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
+import ForkTsCheckerWebpackPlugin from 'fork-ts-checker-webpack-plugin';
 
 const isDevelopment = process.env.NODE_ENV !== 'production';
 
@@ -61,12 +61,12 @@ const config: Configuration = {
     ],
   },
   plugins: [
-    // new ForkTsCheckerWebpackPlugin({
-    //   async: false,
-    //   // eslint: {
-    //   //   files: "./src/**/*",
-    //   // },
-    // }),
+    new ForkTsCheckerWebpackPlugin({
+      async: false,
+      // eslint: {
+      //   files: "./src/**/*",
+      // },
+    }),
     new webpack.EnvironmentPlugin({ NODE_ENV: isDevelopment ? 'development' : 'production' }),
   ],
   output: {
@@ -74,21 +74,21 @@ const config: Configuration = {
     filename: '[name].js',
     publicPath: '/dist/',
   },
-  // devServer: {
-  //   historyApiFallback: true,
-  //   port: 3090,
-  //   devMiddleware: { publicPath: '/dist/' },
-  //   static: { directory: path.resolve(__dirname) },
-  // },
+  devServer: {
+    historyApiFallback: true, // react router // 가짜 주소를 진짜 있는것 마냥 바꿔주는것!!
+    port: 3090,
+    devMiddleware: { publicPath: '/dist/' },
+    static: { directory: path.resolve(__dirname) },
+  },
 };
 
 if (isDevelopment && config.plugins) {
-  // config.plugins.push(new webpack.HotModuleReplacementPlugin());
-  // config.plugins.push(new ReactRefreshWebpackPlugin({
-  //   overlay: {
-  //     useURLPolyfill: true
-  //   }
-  // }));
+  config.plugins.push(new webpack.HotModuleReplacementPlugin());
+  config.plugins.push(new ReactRefreshWebpackPlugin({
+    overlay: {
+      useURLPolyfill: true
+    }
+  }));
 }
 if (!isDevelopment && config.plugins) {
 }
