@@ -2,6 +2,7 @@ import useInput from '@hooks/useInput'
 import React, { useCallback, useState } from 'react'
 import axios from 'axios'
 import { Form, Error, Success, Label, Input, LinkContainer, Button, Header } from './styles'
+import { Link } from 'react-router-dom'
 
 // 코드를 거의 완성하고 중복을 제거하는 것이 좋다.
 const SignUp = () => {
@@ -97,7 +98,9 @@ const SignUp = () => {
       </Form>
       <LinkContainer>
         이미 회원이신가요?&nbsp;
-        <a href="/login">로그인 하러가기</a>
+        {/* <a href="/login">로그인 하러가기</a> */}
+        {/* a tag 사용하면 새로고침 발생! */}
+        <Link to={"/login"}>로그인 하러가기</Link>
       </LinkContainer>
     </div>
   )
