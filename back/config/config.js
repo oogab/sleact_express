@@ -6,23 +6,23 @@ module.exports = {
     "password": process.env.MARIA_PASSWORD,
     "database": "sleact_development",
     "host": process.env.MARIA_ADDRESS,
-    "dialect": "mysql",
-    // "dialectOptions": {connectTimeout: 1000}
+    "dialect": "mariadb",
+    "dialectOptions": {connectTimeout: 1000}
   },
   "test": {
     "username": "admin",
     "password": process.env.MARIA_PASSWORD,
     "database": "sleact",
     "host": process.env.MARIA_ADDRESS,
-    "dialect": "mysql",
-    // "dialectOptions": {connectTimeout: 1000}
+    "dialect": "mariadb",
+    "dialectOptions": {connectTimeout: 1000}
   },
   "production": {
     "username": "admin",
     "password": process.env.MARIA_PASSWORD,
     "database": "sleact",
     "host": process.env.MARIA_ADDRESS,
-    "dialect": "mysql",
-    // "dialectOptions": {connectTimeout: 1000}
+    "dialect": "mariadb",
+    "dialectOptions": {connectTimeout: 1000}
   }
 }

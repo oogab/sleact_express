@@ -44,7 +44,7 @@ const LogIn = () => {
   console.log(error, userData);
   if (!error && userData) {
     console.log('로그인됨', userData);
-    navigate("/workspace/sleact/channel/일반")
+    navigate("/workspace/sleact/channel/")
   }
 
   return (

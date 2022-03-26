@@ -2,10 +2,13 @@ import useInput from '@hooks/useInput'
 import React, { useCallback, useState } from 'react'
 import axios from 'axios'
 import { Form, Error, Success, Label, Input, LinkContainer, Button, Header } from './styles'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import fetcher from '@utils/fetcher'
+import useSWR from 'swr'
 
 // 코드를 거의 완성하고 중복을 제거하는 것이 좋다.
 const SignUp = () => {
+  const { data: userData, error, mutate } = useSWR('/api/users', fetcher)
   const [email, onChangeEmail] = useInput('')
   const [nickname, onChangeNickname] = useInput('')
   const [password, setPassword] = useState('')
@@ -13,6 +16,8 @@ const SignUp = () => {
   const [mismatchError, setMismatchError] = useState(false)
   const [signUpError, setSignUpError] = useState('')
   const [signUpSuccess, setSignUpSuccess] = useState(false)
+
+  const navigate = useNavigate()
 
   // useInput을 이용하여 중복 제거
   // const onChangeEmail = useCallback((e) => {
@@ -61,6 +66,19 @@ const SignUp = () => {
       .finally(() => {})
     }
   }, [email, nickname, password, passwordCheck])
+
+  // !userData해도 대부분은 괜찮지만 swr 호출에서 false인 경우 => 로딩중이 아니라 이미 내 정보 가지고 있는 경우?
+  // 그런 경우를 피하기 위해서 undefined로 확인
+  if (userData === undefined) {
+    return <div>로딩중...</div>
+  }
+
+  // 이 validate 아무 위치나 둘 수 있는게 아니라 항상 이쯤에 둬야 한다.
+  // 만약 onSubmit 보다 위에 있다면 => 에러 발생
+  // 아 원래 return Redirect였는데 return은 항상 hooks 아래에 있어야 한다. 근데 왜?
+  if (userData) {
+    navigate('/workspace/sleact/channel')
+  }
 
   return (
     <div id="container">
