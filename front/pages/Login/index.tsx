@@ -8,6 +8,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import useSWR from 'swr';
 
 const LogIn = () => {
+  // fetcher 이 주소를 어떻게 처리할 것인가 적어주는 것
+  // swr이 첫 줄에 있으니 login 컴포넌트가 실행 될 때 바로 실행된다.
+  // login 안되어있으니 false 뜬다.
+  // users 요청을 두 번보냈는데 탭 변경 같은 작업이 발생할 때 자동으로 실행된다.
   const { data: userData, error, mutate } = useSWR('/api/users', fetcher);
   const [logInError, setLogInError] = useState(false);
   const [email, onChangeEmail] = useInput('');
