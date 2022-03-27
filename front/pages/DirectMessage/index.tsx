@@ -1,12 +1,9 @@
-import Workspace from '@layouts/Workspace'
 import React from 'react'
 
 const DirectMessage = () => {
-    return (
-        <Workspace>
-            <div>디엠!</div>
-        </Workspace>
-    )
+  return (
+    <div>디엠!</div>
+  )
 }
 
 export default DirectMessage

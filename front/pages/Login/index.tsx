@@ -38,14 +38,22 @@ const LogIn = () => {
           setLogInError(error.response?.data?.code === 401);
         });
     },
-    [email, password, mutate],
+    [email, password],
   );
 
-  console.log(error, userData);
-  if (!error && userData) {
-    console.log('로그인됨', userData);
-    navigate("/workspace/sleact/channel/")
+  if (userData === undefined) {
+    return <div>로딩중...</div>
   }
+
+  if (userData) {
+    navigate('/workspace/sleact/channel/일반')
+  }
+
+  // console.log(error, userData);
+  // if (!error && userData) {
+  //   console.log('로그인됨', userData);
+  //   navigate("/workspace/sleact/channel/")
+  // }
 
   return (
     <div id="container">

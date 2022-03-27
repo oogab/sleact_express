@@ -77,7 +77,7 @@ const SignUp = () => {
   // 만약 onSubmit 보다 위에 있다면 => 에러 발생
   // 아 원래 return Redirect였는데 return은 항상 hooks 아래에 있어야 한다. 근데 왜?
   if (userData) {
-    navigate('/workspace/sleact/channel')
+    navigate("/workspace/sleact/channel/일반")
   }
 
   return (

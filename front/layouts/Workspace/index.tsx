@@ -1,21 +1,31 @@
 import fetcher from '@utils/fetcher'
 import axios from 'axios'
-import React, { FC, useCallback, useState } from 'react'
+import React, { VFC, useCallback, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useSWR from 'swr'
 import { AddButton, Channels, Chats, Header, LogOutButton, MenuScroll, ProfileImg, ProfileModal, RightMenu, WorkspaceButton, WorkspaceModal, WorkspaceName, Workspaces, WorkspaceWrapper } from './styles'
 import gravatar from 'gravatar'
 import Menu from '@components/Menu'
 import { Link } from 'react-router-dom'
-import { IUser, IWorkspace } from '@typings/db'
+import { IChannel, IUser, IWorkspace } from '@typings/db'
 import { Button, Input, Label } from '@pages/SignUp/styles'
 import useInput from '@hooks/useInput'
 import Modal from '@components/Modal'
 import { toast } from 'react-toastify'
 import CreateChannelModal from '@components/CreateChannelModal'
+import { Routes, Route } from 'react-router-dom'
+import loadable from '@loadable/component'
+import { useParams } from 'react-router'
 
-const Workspace: FC = ({ children }) => {
+const Channel = loadable(() => import('@pages/Channel'))
+const DirectMessage = loadable(() => import('@pages/DirectMessage'))
+
+const Workspace: VFC = () => {
+  const { workspace } = useParams<{ workspace: string }>()
+  console.log(workspace)
+
   const { data: userData, error, mutate } = useSWR<IUser>('/api/users', fetcher)
+  const { data: channelData } = useSWR<IChannel[]>(userData ? `/api/workspaces/${workspace}/channels` : null, fetcher)
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [showWrokspaceModal, setShowWorkspaceModal] = useState(false)
   const [showCreateWorkspaceModal, setShowCreateWorkspaceModal] = useState(false)
@@ -127,9 +137,17 @@ const Workspace: FC = ({ children }) => {
                 <button onClick={onLogout}>로그아웃</button>
               </WorkspaceModal>
             </Menu>
+            {channelData?.map((v) => (
+              <div>{v.name}</div>
+            ))}
           </MenuScroll>
         </Channels>
-        {children}
+        <Chats>
+          <Routes>
+            <Route path="/channel/:channel" element={<Channel />} />
+            <Route path="/dm/:id" element={<DirectMessage />} />
+          </Routes>
+        </Chats>
       </WorkspaceWrapper>
       <Modal show={showCreateWorkspaceModal} onCloseModal={onCloseModal}>
         <form onSubmit={onCreateWrokspace}>
