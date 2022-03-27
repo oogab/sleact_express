@@ -16,6 +16,8 @@ import CreateChannelModal from '@components/CreateChannelModal'
 import { Routes, Route } from 'react-router-dom'
 import loadable from '@loadable/component'
 import { useParams } from 'react-router'
+import InviteWorkspaceModal from '@components/InviteWorkspaceModal'
+import InviteChannelModal from '@components/InviteChannelModal'
 
 const Channel = loadable(() => import('@pages/Channel'))
 const DirectMessage = loadable(() => import('@pages/DirectMessage'))
@@ -30,6 +32,8 @@ const Workspace: VFC = () => {
   const [showWrokspaceModal, setShowWorkspaceModal] = useState(false)
   const [showCreateWorkspaceModal, setShowCreateWorkspaceModal] = useState(false)
   const [showCreateChannelModal, setShowCreateChannelModal] = useState(false)
+  const [showInviteWorkspaceModal, setShowInviteWorkspaceModal] = useState(false)
+  const [showInviteChannelModal, setShowInviteChannelModal] = useState(false)
   const [newWorkspace, onChangeNewWorkspace, setNewWorkspace] = useInput('')
   const [newUrl, onChangeNewUrl, setNewUrl] = useInput('')
   const navigate = useNavigate()
@@ -86,6 +90,10 @@ const Workspace: VFC = () => {
 
   const onClickAddChannel = useCallback(() => {
     setShowCreateChannelModal(true)
+  }, [])
+
+  const onClickInviteWorkspace = useCallback(() => {
+
   }, [])
 
   if (!userData) {
@@ -163,6 +171,8 @@ const Workspace: VFC = () => {
         </form>
       </Modal>
       <CreateChannelModal show={showCreateChannelModal} onCloseModal={onCloseModal} setShowCreateChannelModal={setShowCreateChannelModal} />
+      <InviteWorkspaceModal show={showInviteWorkspaceModal} onCloseModal={onCloseModal} setShowInviteWorkspaceModal={setShowInviteWorkspaceModal} />
+      <InviteChannelModal show={showInviteChannelModal} onCloseModal={onCloseModal} setShowInviteChannelModal={setShowInviteChannelModal} />
     </div>
   )
 }
