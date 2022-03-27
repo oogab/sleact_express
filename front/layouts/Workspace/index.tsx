@@ -42,9 +42,8 @@ const Workspace: FC = ({ children }) => {
                         {/* <Menu>Menu</Menu> */}
                     </MenuScroll>
                 </Channels>
-                <Chats>Chats</Chats>
+                {children}
             </WorkspaceWrapper>
-            {children}
         </div>
     )
 }
